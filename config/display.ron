@@ -1,0 +1,4 @@
+(
+  title: "rust-gb-amethyst-poc",
+  dimensions: Some((320, 288)),
+)

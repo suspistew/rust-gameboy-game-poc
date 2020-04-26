@@ -1,0 +1,16 @@
+[package]
+name = "rust-gb-poc"
+version = "0.1.0"
+authors = []
+edition = "2018"
+
+[dependencies]
+amethyst = "0.15.0"
+ron = "0.5.1"
+serde = "1.0.106"
+
+[features]
+default = ["metal"]
+empty = ["amethyst/empty"]
+metal = ["amethyst/metal"]
+vulkan = ["amethyst/vulkan"]
