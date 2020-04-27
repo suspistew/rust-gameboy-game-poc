@@ -12,6 +12,8 @@ use amethyst::{
 use game::Game;
 
 mod game;
+mod config;
+mod systems;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
