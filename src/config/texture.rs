@@ -22,12 +22,7 @@ fn load_texture(world: &mut World, image: &str, config: &str) -> Handle<SpriteSh
     let texture_handle = {
         let asset_loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
-        asset_loader.load(
-            image,
-            ImageFormat::default(),
-            (),
-            &texture_storage,
-        )
+        asset_loader.load(image, ImageFormat::default(), (), &texture_storage)
     };
 
     let asset_loader = world.read_resource::<Loader>();

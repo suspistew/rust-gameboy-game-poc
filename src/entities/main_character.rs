@@ -1,6 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-pub struct MainCharacter ;
+pub struct MainCharacter;
 
 impl Component for MainCharacter {
     type Storage = DenseVecStorage<Self>;

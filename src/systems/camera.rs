@@ -1,16 +1,13 @@
-
+use crate::game::{SCREEN_HEIGHT, SCREEN_WIDTH};
 use amethyst::{
-    core::{Parent, transform::Transform},
+    core::{transform::Transform, Parent},
+    ecs::Entity,
     prelude::*,
     renderer::Camera,
-    ecs::Entity
 };
-use crate::config::LevelConfig;
-use crate::game::{SCREEN_HEIGHT, SCREEN_WIDTH, TILE_SIZE};
 
-pub fn initialize_camera(world: &mut World, level_config: &LevelConfig, player: Entity) { 
+pub fn initialize_camera(world: &mut World, player: Entity) {
     let mut transform = Transform::default();
-    let half_tile_size = TILE_SIZE / 2.0;
     transform.set_translation_z(1.0);
 
     world

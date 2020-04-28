@@ -1,3 +1,4 @@
+use amethyst::core::frame_limiter::FrameRateLimitStrategy;
 use amethyst::{
     core::transform::TransformBundle,
     input::{InputBundle, StringBindings},
@@ -9,15 +10,13 @@ use amethyst::{
     },
     utils::application_root_dir,
 };
-use amethyst::core::frame_limiter::FrameRateLimitStrategy;
 
 use game::Game;
-use systems::CharacterSystem;
 
-mod game;
 mod config;
-mod systems;
 mod entities;
+mod game;
+mod systems;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -43,14 +42,15 @@ fn main() -> amethyst::Result<()> {
         )?
         .with_bundle(TransformBundle::new())?
         .with_bundle(input_bundle)?
-        .with(systems::CharacterSystem::new(), "character_system", &["input_system"]);
+        .with(
+            systems::CharacterSystem::new(),
+            "character_system",
+            &["input_system"],
+        );
 
     let mut game = Application::build(assets_dir, Game)?
-    .with_frame_limit(
-        FrameRateLimitStrategy::Sleep,
-        32,
-    )
-    .build(game_data)?;
+        .with_frame_limit(FrameRateLimitStrategy::Sleep, 32)
+        .build(game_data)?;
     game.run();
 
     Ok(())

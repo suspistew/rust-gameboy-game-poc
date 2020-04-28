@@ -13,13 +13,17 @@ pub struct LevelConfig {
 #[derive(Debug, Deserialize)]
 pub struct PositionConfig {
     pub x: f32,
-    pub y: f32
+    pub y: f32,
 }
 
-pub fn read_level(lvl_number: usize) -> LevelConfig{
-    let input_path = format!("{}/assets/levels/level_{}.ron", env!("CARGO_MANIFEST_DIR"), lvl_number);
+pub fn read_level(lvl_number: usize) -> LevelConfig {
+    let input_path = format!(
+        "{}/assets/levels/level_{}.ron",
+        env!("CARGO_MANIFEST_DIR"),
+        lvl_number
+    );
     let f = File::open(&input_path).expect("Failed opening file");
-    let res :LevelConfig = match from_reader(f) {
+    let res: LevelConfig = match from_reader(f) {
         Ok(x) => x,
         Err(e) => {
             println!("Failed to load level {}: {}", lvl_number, e);
