@@ -7,8 +7,15 @@ use amethyst::{
 const IMAGE_MISC: &str = "textures/misc.png";
 const CONFIG_MISC: &str = "textures/misc.ron";
 
+const IMAGE_CHARACTER: &str = "textures/character.png";
+const CONFIG_CHARACTER: &str = "textures/character.ron";
+
 pub fn load_misc_spritesheet(world: &mut World) -> Handle<SpriteSheet> {
     load_texture(world, IMAGE_MISC, CONFIG_MISC)
+}
+
+pub fn load_character_spritesheet(world: &mut World) -> Handle<SpriteSheet> {
+    load_texture(world, IMAGE_CHARACTER, CONFIG_CHARACTER)
 }
 
 fn load_texture(world: &mut World, image: &str, config: &str) -> Handle<SpriteSheet> {

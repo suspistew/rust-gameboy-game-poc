@@ -1,0 +1,11 @@
+(
+	axes: {
+	},
+	actions: {
+		"interact": [ [Key(E)]],
+        "up": [ [Key(Up)]],
+        "down": [ [Key(Down)]],
+        "left": [ [Key(Left)]],
+        "right": [ [Key(Right)]],
+	},
+)

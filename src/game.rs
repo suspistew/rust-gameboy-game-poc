@@ -3,13 +3,15 @@ use amethyst::{
     core::transform::Transform,
     prelude::*,
     renderer::{Camera, SpriteRender, SpriteSheet, Texture},
+    ecs::Entity
 };
 
-use crate::config::{read_level, load_misc_spritesheet, LevelConfig};
+use crate::config::{read_level, load_misc_spritesheet, load_character_spritesheet, LevelConfig};
 use crate::systems::{initialize_camera};
+use crate::entities::MainCharacter;
 
 pub const SCREEN_HEIGHT: f32 = 288.0;
-pub const SCREEN_WIDTH: f32 = 320.0;
+pub const SCREEN_WIDTH: f32 = 352.0;
 pub const TILE_SIZE: f32 = 32.0;
 pub const NO_TILE_ID: i32 = -1; 
 
@@ -21,10 +23,12 @@ impl SimpleState for Game {
         let level_1 = read_level(1);
         let world = data.world;
         let misc_spritesheet_handle = load_misc_spritesheet(world);
+        let character_spritesheet_handle = load_character_spritesheet(world);
 
         initialize_layer(world, &level_1, misc_spritesheet_handle.clone(), "background", 0.01);
-        initialize_layer(world, &level_1, misc_spritesheet_handle.clone(), "misc", 0.02);
-        initialize_camera(world, &level_1);
+        initialize_layer(world, &level_1, misc_spritesheet_handle.clone(), "misc", 0.03);
+        let player = initialize_player(world, &level_1, character_spritesheet_handle.clone());
+        initialize_camera(world, &level_1, player);
     }
 }
 
@@ -43,7 +47,7 @@ fn initialize_layer (world: &mut World, level: &LevelConfig, sprite_sheet_handle
                         Ok(num) => num,
                         Err(_) => NO_TILE_ID
                     };
-                    
+
                     if tile_number != NO_TILE_ID && tile_number >= 0 {
                         let sprite_render = SpriteRender {
                             sprite_sheet: sprite_sheet_handle.clone(),
@@ -65,4 +69,20 @@ fn initialize_layer (world: &mut World, level: &LevelConfig, sprite_sheet_handle
             println!("Impossible to find the layer {} in the level config", layer);
         }
     };
+}
+
+fn initialize_player (world: &mut World, level: &LevelConfig, sprite_sheet_handle: Handle<SpriteSheet>) -> Entity {
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 0,
+    };
+
+    let mut transform = Transform::default();
+    transform.set_translation_xyz(level.character.x * TILE_SIZE, level.character.y as f32* TILE_SIZE, 0.02);
+    world
+        .create_entity()
+        .with(sprite_render)
+        .with(MainCharacter)
+        .with(transform)
+        .build()
 }
